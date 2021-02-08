@@ -65,8 +65,15 @@ void fillNoise(std::tuple<short, short, short> (&colorData)[rows][cols], std::tu
     }
 }
 
+/**
+ * Main image generation part: filling the array with noise but weighting it
+ * higher the x, the more green
+ * higher the y, the more red
+ * higher the distance from the bottom right corner, the more blue
+ * also caps the maximum distance based on distance from the center so i can have "shadows" on the edges
+ */
 template <size_t rows, size_t cols>
-void fillGradientNoise(std::tuple<short, short, short> (&colorData)[rows][cols], int squareSize) {
+void wheelShadowNoise(std::tuple<short, short, short> (&colorData)[rows][cols], int squareSize) {
     float scale = squareSize / 2048.0; 
     int MAX_DIST = sqrt(rows * rows / 4 + cols * cols / 4);
     // 2048 seems to be a magic number of some sort.  256, 512, 1024 all produce magenta-cyan-white gradients with a yellow spot in the middle
@@ -91,7 +98,7 @@ int main() {
     std::tuple<short, short, short> image[512][512];
 
     clear(image);
-    fillGradientNoise(image, 8);
+    wheelShadowNoise(image, 8);
     write(image, fout);
     fout.close();
 }
