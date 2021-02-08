@@ -45,8 +45,10 @@ void clear(std::tuple<short, short, short> (&colorData)[rows][cols]) {
 
 /**
  * Fills color data array with random RGB values, with each value in the triple being bounded by min and max inclusive.
- * Optional modifiers:
- * Weights applies 
+ * Optional modifiers: 
+ * Weights that scale the color triples correspondingly
+ * Bounds for what part of the image should be filled
+ * Minimum and maximum to bound the color values
  */
 template <size_t rows, size_t cols>
 void fillNoise(std::tuple<short, short, short> (&colorData)[rows][cols], std::tuple<float, float, float> weights = {1, 1, 1}, std::tuple<int, int, int, int> bounds = {0, 0, cols, rows}, int min = 0, int max = 255) {
